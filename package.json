@@ -1,0 +1,31 @@
+{
+  "name": "scraper-sample",
+  "version": "1.0.0",
+  "description": "Sample project to scrape data from websites",
+  "main": "dist/index.js",
+  "scripts": {
+    "watch": "tsc -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/JasonGoemaat/scraper-sample.git"
+  },
+  "author": "Jason Goemaat",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JasonGoemaat/scraper-sample/issues"
+  },
+  "homepage": "https://github.com/JasonGoemaat/scraper-sample#readme",
+  "dependencies": {
+    "@types/cheerio": "^0.17.29",
+    "@types/colors": "^0.6.31",
+    "@types/request": "0.0.30",
+    "cheerio": "^0.22.0",
+    "colors": "^1.1.2",
+    "keypress": "^0.2.1",
+    "lodash": "^4.15.0",
+    "request": "^2.74.0",
+    "rxjs": "^5.0.0-beta.12",
+    "typescript": "^2.1.0-dev.20160914"
+  }
+}
