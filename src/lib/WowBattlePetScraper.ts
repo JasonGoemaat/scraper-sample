@@ -112,7 +112,7 @@ export class WowBattlePetScraper {
      * <ul>
      *  <li>Name</li>
      *  <li>Max Wild Level</li>
-     *  <li>Max Wild Zones</li>
+     *  <li>Max Wild Zone</li>
      * </ul>
      * 
      * @param {boolean} allZones if true, one line per zone that has it at max level
@@ -149,6 +149,55 @@ export class WowBattlePetScraper {
                 lines.push(`${pet.name}\t0\tNO ZONE FOUND!`);
                 debug.error(colors.red('  NO ZONE!'));
             }
+        });
+
+        debug.log('lines:', lines.length);
+        return lines.join('\r\n');
+    }
+
+    /**
+     * Return one of the highest level zones where a pet can be found.
+     */
+    getHighestPetZone(petName: string): Zone {
+        let pet: Pet = this.pets.petsByName[petName];
+        let zone: Zone = undefined;
+        pet.zones.forEach((zoneName) => {
+            let z: Zone = this.zones.zonesByName[zoneName];
+            if (!zone || zone.maxPetLevel < z.maxPetLevel) {
+                zone = z;
+            }
+        });
+        return zone;
+    }
+
+
+    /**
+     * List all pet/zone combinations, along with a higher level and zone where
+     * it can be found if the current zone doesn't have the highest level ones.
+     * <ul>
+     *  <li>Zone</li>
+     *  <li>Name</li>
+     *  <li>Level</li>
+     *  <li>Max Wild Level</li>
+     *  <li>Max Wild Zone</li>
+     * </ul>
+     */
+    getAllPetsAndHighestZones(): string {
+        var lines: string[] = [];
+        var names = Object.keys(this.pets.petsByName).sort();
+        console.error('Pet names:', names.length);
+        names.forEach((name, index, arr) => {
+            let pet: Pet = this.pets.petsByName[name];
+            pet.zones.forEach(zoneName => {
+                let zone: Zone = this.zones.zonesByName[zoneName];
+                let maxZone = this.getHighestPetZone(pet.name);
+                if (maxZone.maxPetLevel > zone.maxPetLevel) {
+                    lines.push(`${zone.name}\t${pet.name}\t${zone.maxPetLevel}\t${maxZone.maxPetLevel}\t${maxZone.name}`);
+                } else {
+                    // current zone is highest
+                    lines.push(`${zone.name}\t${pet.name}\t${zone.maxPetLevel}`);
+                }
+            });
         });
 
         debug.log('lines:', lines.length);

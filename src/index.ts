@@ -17,7 +17,8 @@ new WowBattlePetScraper().scrape()
     console.error('Pets:', o.pets.length);
 
     //console.log(JSON.stringify(o, null, 2));
-    console.log(x.getPetsAndHighestZones(true));
+    //console.log(x.getPetsAndHighestZones(true));
+    console.log(x.getAllPetsAndHighestZones());
 }, y => {
     console.log('rejected!');
 });
